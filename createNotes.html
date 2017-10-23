@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+    <title>100% Cash Out Resettled</title>
+<head>
+
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+
+<style>
+body {
+      font-family: sans-serif;
+      font-size: 1em;
+      color: #333;
+      background-color: #ddd;
+}
+
+label {
+      clear: both;
+      display: block;
+      font-size: 0.85em;
+      font-weight: bold;
+      padding: 0.8em 0 0.2em 0;
+      user-select: none;
+}
+
+input, button {
+      float: left;
+      font-size: 1em;
+      padding: 3px 6px;
+      margin: 0;
+      border: 1px solid #333;
+      outline: 0;
+      box-shadow: none;
+}
+
+::-moz-focus-inner { 
+      padding: 0;
+      border: 0;
+}
+
+input {
+      width: 50em;
+      background-color: #fff;
+      border-left: 0 none;
+      border-radius:  0 3px 3px 0 ;
+}
+
+button {
+      position: relative;
+      background-color: #aaa;
+      border-radius: 3px 0 0 3px ;
+      cursor: pointer;
+}
+
+.copied::after {
+      position: absolute;
+      top: 12%;
+      left: 110%;
+      display: block;
+      content: "copied";
+      font-size: 0.75em;
+      padding: 2px 3px;
+      color: #fff;
+      background-color: #22a;
+      border-radius: 3px;
+      opacity: 0;
+      will-change: opacity, transform;
+      animation: showcopied 1.5s ease;
+}
+
+@keyframes showcopied {
+  0% {
+        opacity: 0;
+        transform: translateX(100%);
+  }
+  70% {
+        opacity: 1;
+        transform: translateX(0);
+  }
+  100% {
+        opacity: 0;
+  }
+}
+</style>
+</head>
+
+
+<body>
+<button onClick="history.go(0)">Reload page</button>
+    
+<br><br>100% Cash Out Resettled<br><br>
+
+    
+    
+    <input type="text" id="usernames" value="Enter Users"
+            onfocus="(this.value == 'Enter Users') && (this.value = '')"
+            onblur="(this.value == '') && (this.value = 'Enter Users')" />  <br> <br>
+    <input type="text" id="betids" value="Enter Bet IDs"
+           onfocus="(this.value == 'Enter Bet IDs') && (this.value = '')"
+            onblur="(this.value == '') && (this.value = 'Enter Bet IDs')" />   <br> <br>
+    <button onclick="myFunction()">Generate Notes</button> 
+    <br><br><br>
+     
+
+<br><br><br>
+ 
+
+<p id="demo"></p>
+    
+    
+    
+    
+    
+<script type="text/javascript">
+
+</script>
+    
+
+<script>
+
+function myFunction() {
+
+	var noteFirstHalf = "error on bet ";
+	var noteSecondHalf = " - resettled";
+	var noteComplete = "";
+		
+	//ids it's an array with str values (Bet IDs)
+    var str = document.getElementById("betids").value; 
+	var betIDs = str.split(" ");  
+    
+    //usernames it's an array with str values (usernames)
+    var str = document.getElementById("usernames").value; 
+	var usernames = str.split(" ");  
+	
+	//foreach bet id create a note
+	var text = "";
+	var i;
+	for (i = 0; i < betIDs.length; i++) { 
+	
+		noteComplete = noteFirstHalf + betIDs[i] + noteSecondHalf;
+        
+        text += "<button data-copytarget='#usernames" + i + "' class='tab' id='tab" + i + "' onClick='changeColor(this.id)'>copy</button> <input type='text' style='width: 10em;' id='usernames" + i + "' value='" + usernames[i] + "' /> ";
+        
+		text += "<button data-copytarget='#note" + i + "' class='tab' id='tab" + (i + 1000) + "' onClick='changeColor(this.id)'>copy</button> <input type='text' id='note" + i + "' value='" + noteComplete + "' /> <br> <br>";
+	}
+	
+	//get all the notes    id
+    document.getElementById("demo").innerHTML = text;  
+}
+
+
+
+(function() {
+
+	'use strict';
+  
+  // click events
+  document.body.addEventListener('click', copy, true);
+
+	// event handler
+	function copy(e) {
+
+    // find target element
+    var 
+      t = e.target,
+      c = t.dataset.copytarget,
+      inp = (c ? document.querySelector(c) : null);
+      
+    // is element selectable?
+    if (inp && inp.select) {
+      
+      // select text
+      inp.select();
+
+      try {
+        // copy text
+        document.execCommand('copy');
+        inp.blur();
+        
+        // copied animation
+        t.classList.add('copied');
+        setTimeout(function() { t.classList.remove('copied'); }, 1500);
+      }
+      catch (err) {
+        alert('please press Ctrl/Cmd+C to copy');
+      }
+      
+    }
+    
+	}
+
+})();
+    
+    
+function changeColor(id) {    
+        var tabs = document.getElementsByClassName('tab')
+        for (var i = 0; i < tabs.length; ++i) {
+            var item = tabs[i];
+            item.style.backgroundColor = (item.id == id) ? "red" : "silver";
+        }
+}
+
+function reloadPage() {
+    location.reload(forceGet);
+}
+    
+    
+</script>
+
+</body>
+</html>
